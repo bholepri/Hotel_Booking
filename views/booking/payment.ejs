@@ -1,0 +1,150 @@
+
+ <% layout("/layouts/boilerplate") -%>
+ <style>
+   .congratulation-wrapper {
+       max-width: 550px;
+       height: 350px;
+       margin-inline: auto;
+       -webkit-box-shadow: 0 0 20px #f3f3f3;
+       box-shadow: 0 0 20px #f3f3f3;
+       padding: 30px 20px;
+       background-color: #fff;
+       border-radius: 10px;
+   }
+
+   .congratulation-contents.center-text .congratulation-contents-icon {
+       margin-inline: auto;
+   }
+   .congratulation-contents-icon {
+       display: -webkit-box;
+       display: -ms-flexbox;
+       display: flex;
+       -webkit-box-align: center;
+       -ms-flex-align: center;
+       align-items: center;
+       -webkit-box-pack: center;
+       -ms-flex-pack: center;
+       justify-content: center;
+       height: 100px;
+       width: 100px;
+       background-color: #65c18c;
+       color: #fff;
+       font-size: 50px;
+       border-radius: 50%;
+       margin-bottom: 30px;
+   }
+   .congratulation-contents-title {
+       font-size: 32px;
+       line-height: 36px;
+       margin: -6px 0 0;
+   }
+   .congratulation-contents-para {
+       font-size: 16px;
+       line-height: 24px;
+       margin-top: 15px;
+   }
+   .btn-wrapper {
+       display: block;
+   }
+   .cmn-btn.btn-bg-1 {
+       background: #6176f6;
+       color: #fff;
+       border: 2px solid transparent;
+       border-radius:3px;
+       text-decoration: none;
+       padding:5px;
+   }
+   #rzp-button{
+      height: 3.5rem;
+      width: 15rem;
+      font-size: 20px;
+   }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+   
+<!-- Congratulations area starts -->
+<div class="congratulation-area text-center mt-5">
+   <div class="container">
+       <div class="congratulation-wrapper border">
+           <div class="congratulation-contents center-text">
+               <div class="congratulation-contents-icon">
+                   <i class="fas fa-check"></i>
+               </div>
+               <h4 class="congratulation-contents-title"> Order Confirmed! </h4>
+               <p class="mt-2">Make a Payment using Razorpay</p>
+               <% let price= listing.price * order.days * order.rooms %>
+               <button id="rzp-button" class="btn btn-dark  book-now-button mt-3 ">Proceed to pay &#8377;<%= price ? new Intl.NumberFormat("en-IN").format(price) : '0'  %></button>
+           </div>
+       </div>
+   </div>
+</div>
+
+
+  <script>
+    document.getElementById('rzp-button').onclick = async function () {
+      const response = await fetch('/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         
+          amount: 50000, // amount in the smallest currency unit (e.g., 50000 paise = INR 500)
+          currency: 'INR',
+          receipt: 'receipt#1'
+        }),
+      });
+
+      const orderData = await response.json();
+
+      const options = {
+        key: '<%= process.env.RAZORPAY_KEY_ID %>', // Your Razorpay Key ID
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Wanderlust',
+        description: 'Test Transaction',
+        order_id: orderData.id,
+        handler: async function (response) {
+          const paymentData = {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          const result = await fetch('/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(paymentData),
+          });
+
+          const paymentResult = await result.json();
+          if (paymentResult.success) {
+            alert('Payment Successful');
+          } else {
+            alert('Payment Failed');
+          }
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+  </script>
+</body>
+</html>

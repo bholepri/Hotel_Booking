@@ -1,0 +1,39 @@
+<% layout("/layouts/boilerplate") -%>
+<h1 class="mt-4 offset-4">Orders of Wanderlust</h1>
+<table class="table table-striped table-bordered mt-5">
+    <thead>
+      <tr>
+        
+        <th scope="col">Customer</th>
+        <th scope="col">Hotel</th>
+        <th scope="col">Days</th>
+        <th scope="col">Rooms</th>
+        <th scope="col">Date</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+     
+        <% for(let order of allOrders) { %>
+          
+
+       <tr>
+          <td><%= order.name %></td>
+          <td><%= order.listingName %></td>
+          <td><%= order.days %></td>
+          <td><%= order.rooms %></td>
+          <td><%= order.date.toDateString()%></td>
+          <td><%= order.email %></td>
+          <td>
+            <form action="/orders/<%= order._id %>" method="post">
+              <%= order.status %>
+              <button class="btn btn-dark  offset-3 edit-btn ">Done</button>
+            </form>
+          </td>
+       </tr>
+      <% } %>
+    </tbody>
+  </table>
+  
+

@@ -1,0 +1,48 @@
+
+<% layout("/layouts/boilerplate") -%>
+<h1 class="col-6 offset-3 mt-3">Book Your Hotel</h1>
+
+<form action="/listings/<%=listing.id%>/booking/book/payment" method="post">
+    <div class="col-6 offset-3 mt-3">
+        <div class="mb-3">
+            <label for="listingName" class="form-label" ><b>Hotel Name:</b> </label>
+            <input type="text" name="listingName" id="listingName" class="form-control" required value="<%=listing.title %>">
+           
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label" ><b>Name:</b> </label>
+            <input type="text" name="name" id="name" class="form-control" required value="<%=currUser.username %>">
+            <div class="invalid-feedback">  Please Enter Name!</div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label" ><b>Email:</b></label>
+            <input type="text" name="email" id="email" class="form-control" required value="<%=currUser.email %>">
+            <div class="invalid-feedback">Please Enter Email!</div>
+        </div>
+        <div class="mb-3 ">
+            <label for="address" class="form-label" ><b>Address:</b></label>
+            <input type="text" name="address" id="address" class="form-control" required value="Bhirud Colony">
+            <div class="invalid-feedback">Please Enter Address!</div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6" >
+                <label for="days" class="form-label"><b>No of Days:</b></label>
+                <input type="number" name="days"  class="form-control" required value="1" min="1">
+                <div class="invalid-feedback">Please Enter No of Days!</div>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="rooms" class="form-label" ><b>No of Rooms:</b></label>
+                <input type="number" name="rooms"  class="form-control" required value="1" min="1">
+                <div class="invalid-feedback">Please Enter No of Rooms!</div>
+            </div>
+        </div>
+        <div class="mb-3 col-4">
+            <label for="date" class="form-label" ><b>Date:</b></label>
+            <input type="date" name="date" id="date" class="form-control" required >
+            <div class="invalid-feedback">Please Enter Date!</div>
+        </div>
+        
+        <button class="btn btn-dark  book-now-button mt-3"> Continue</button></p>
+    </div>
+    
+</form>
