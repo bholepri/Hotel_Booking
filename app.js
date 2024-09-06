@@ -35,8 +35,8 @@ const razorpay = new Razorpay({
 });
 
 
-const dbUrl=process.env.ATLASDB_URL;
-//const dbUrl=process.env.MONGO_LOCAL_URL;
+//const dbUrl=process.env.ATLASDB_URL;
+const dbUrl=process.env.MONGO_LOCAL_URL;
 main().catch(err => console.log(err));    //mongoose
 
 async function main() {
@@ -53,6 +53,10 @@ app.use(express.static(path.join(__dirname,"/public")));  //css
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
 
 const store=MongoStore.create({
   mongoUrl:dbUrl,
@@ -106,9 +110,9 @@ app.post('/verify-payment', (req, res) => {
     res.status(500).json({ success: false });
   }
 });
-// app.get("/",(req,res)=>{
-//     res.send("I Am a Root")
-// })
+app.get("/",(req,res)=>{
+    res.send("I Am a Root")
+})
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -141,9 +145,14 @@ app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 app.use("/",adminRouter);
 
+
+
+
 app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"Page Not Found!"));
+  next(new ExpressError(404,"Page Not Found!"));
+  
 });
+
 
 app.use((err,req,res,next)=>{
     let{statusCode=500,message="Something Went Wrong!"}=err;

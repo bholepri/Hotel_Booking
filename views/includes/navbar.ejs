@@ -35,7 +35,7 @@
             
         </div>
         <div class="navbar-nav ms-auto">
-          <form class="d-flex" role="search">
+          <form action="/search" class="d-flex" role="search">
             <input class="form-control me-2 search-input" type="search" placeholder="Search Hotel Here" aria-label="Search">
             <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
           </form>
@@ -48,7 +48,9 @@
           <% } %>
           <% if(currUser) { %>
           <a class="nav-link" href="/logout"><b>Logout</b></a>
-          <% if(currUser && currUser._id.equals('66d296d90b583e6cd59fc596')) { %>
+          <!-- local database admin id "66d296d90b583e6cd59fc596" -->
+           <!-- mongoatlas admin id "66d9335b4ac1705a6599d2eb" -->
+          <% if(currUser && currUser._id.equals('66d9335b4ac1705a6599d2eb')) { %>
           <a class="nav-link" href="/orders">Orders</a>
           <a class="nav-link" href="/users">Users</a>
           <% } %>
