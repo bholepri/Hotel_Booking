@@ -95,6 +95,7 @@
 
 
   <script>
+    let price= listing.price * order.days * order.rooms;
     document.getElementById('rzp-button').onclick = async function () {
       const response = await fetch('/create-order', {
         method: 'POST',
@@ -103,7 +104,7 @@
         },
         body: JSON.stringify({
          
-          amount: 50000, // amount in the smallest currency unit (e.g., 50000 paise = INR 500)
+          amount: price, // amount in the smallest currency unit (e.g., 50000 paise = INR 500)
           currency: 'INR',
           receipt: 'receipt#1'
         }),
