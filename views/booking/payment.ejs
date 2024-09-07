@@ -59,6 +59,9 @@
       width: 15rem;
       font-size: 20px;
    }
+   .payment-btn{
+    height: 20px;
+   }
 </style>
 
 
@@ -84,7 +87,7 @@
                <h4 class="congratulation-contents-title"> Order Confirmed! </h4>
                <p class="mt-2">Make a Payment using Razorpay</p>
                <% let price= listing.price * order.days * order.rooms %>
-               <button id="rzp-button" class="btn btn-dark  book-now-button mt-3 ">Proceed to pay &#8377;<%= price ? new Intl.NumberFormat("en-IN").format(price) : '0'  %></button>
+               <button id="rzp-button" class="btn btn-dark  book-now-button mt-3 payment-btn ">Proceed to pay &#8377;<%= price ? new Intl.NumberFormat("en-IN").format(price) : '0'  %></button>
            </div>
        </div>
    </div>
