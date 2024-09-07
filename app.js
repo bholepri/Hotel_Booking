@@ -54,9 +54,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-app.get("/", (req, res) => {
-  res.render("index.ejs");
-});
 
 const store=MongoStore.create({
   mongoUrl:dbUrl,
@@ -111,6 +108,10 @@ app.post('/verify-payment', (req, res) => {
   }
 });
 
+
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
 
 app.use(session(sessionOptions));
 app.use(flash());
