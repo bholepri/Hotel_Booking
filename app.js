@@ -35,8 +35,8 @@ const razorpay = new Razorpay({
 });
 
 
-//const dbUrl=process.env.ATLASDB_URL;
-const dbUrl=process.env.MONGO_LOCAL_URL;
+const dbUrl=process.env.ATLASDB_URL;
+//const dbUrl=process.env.MONGO_LOCAL_URL;
 main().catch(err => console.log(err));    //mongoose
 
 async function main() {
