@@ -22,7 +22,7 @@ router.get("/new",isLoggedIn,listingController.renderNewForm);
 
 //show route and update route and delete route
 router.route("/:id")
-.get(isLoggedIn,wrapAsync(listingController.showListing))
+.get(wrapAsync(listingController.showListing))
 .put(isLoggedIn,upload.single('listing[image]'),validateListing,wrapAsync(listingController.updateListing))
 .delete(isLoggedIn,isOwner,wrapAsync(listingController.destroyListing))
 
