@@ -37,6 +37,6 @@ Kindly note that the website may take a few seconds to load as it's hosted on a 
 Live Demo:
 https://hotel-booking-1-8cta.onrender.com
 
-Login using Following credentials To View Admin Functionality
-username: Priyanka
-password: Priyanka
+Login using Following credentials To View Admin Functionality:
+Username: Priyanka,
+Password: Priyanka
