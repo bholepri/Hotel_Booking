@@ -28,7 +28,9 @@
           <td>
             <form action="/orders/<%= order._id %>" method="post">
               <%= order.status %>
+              <% if(order.status === 'Pending!'){ %>
               <button class="btn btn-dark  offset-3 edit-btn ">Done</button>
+              <% } %>
             </form>
           </td>
        </tr>
